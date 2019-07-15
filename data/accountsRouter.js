@@ -22,7 +22,9 @@ router.get("/:id", (req, res) => {
       if (post) {
         res.status(200).json(post);
       } else {
-        res.status(404).json({ message: "post with that id does not exist" });
+        res
+          .status(404)
+          .json({ message: "account with that id does not exist" });
       }
     })
     .catch(error => {
@@ -34,9 +36,9 @@ router.post("/", (req, res) => {
   const account = req.body;
   db("accounts")
     .insert(account, "id")
-    .then(arrayOfIds => {
-      const idOfLastInserted = arrayOfIds[0];
-      res.status(201).json(idOfLastInserted);
+    .then(idArray => {
+      const idOfAdded = idArray[0];
+      res.status(201).json(idOfAdded);
     })
     .catch(error => {
       res.status(500).json(error);
